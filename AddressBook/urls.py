@@ -1,7 +1,8 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from address.views import hello_world, test_html, address_html
+from address.views import hello_world, test_html, address_html, contact, thanks
 from newtest_app.views import newtest_html
+
 
 #from address.views import 
 urlpatterns = [
@@ -14,4 +15,7 @@ urlpatterns = [
     url(r'^test_html',test_html, name='html'),
     url(r'^address',address_html, name='html'),
     url(r'^newtest_html', newtest_html, name='newtest_html'), 
+    url(r'^contact', contact,name="contact"),
+    url(r'^thanks', thanks, name="thanks")
+
 ]

@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Address
+from address.forms import ContactForm
+from django.core.mail import EmailMessage
 
 
 # Create your views here.
@@ -40,3 +42,34 @@ def address_html(request):
 	values = Address.objects.all()
 	context = {'namesdb':values}
 	return render(request,'address.html',context)
+
+#def contact(request):
+	#form_class = ContactForm
+	#context = {'form':form_class}
+	#return render(request, 'contact.html', context)
+
+def thanks(request):
+	return HttpResponse("Thank you and Have a great day!!!")
+
+#email logic: getting data from form and sending mail 
+
+def contact(request):
+	form_class = ContactForm
+	print dir(form_class)
+	context = {'form':form_class}
+
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			print dir(form)
+			subject = "A new contact/lead"
+			contact_name = form.cleaned_data['contact_name']
+			contact_email = form.cleaned_data['contact_email']
+			content = form.cleaned_data['content']
+			email = EmailMessage(subject, contact_name + '\n'
+				+ contact_email + '\n' + content
+				)
+			email.send()
+		return HttpResponseRedirect('/thanks/')
+	return render(request, 'contact.html', context)
+
