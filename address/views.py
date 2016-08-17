@@ -18,12 +18,12 @@ def hello_world(request):
 
 def test_html(request):
 	context={}
-	return render(request,'test.html',context)
+	return render(request,'address/test.html',context)
 
 
-#def address_html(request):
-#	context={}
-#	return render(request,'address.html',context)
+def address_html(request):
+	context={}
+	return render(request,'address/address.html',context)
 
 
 
